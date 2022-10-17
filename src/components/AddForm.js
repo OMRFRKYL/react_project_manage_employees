@@ -13,10 +13,10 @@ const AddForm = () => {
         <Form.Control as="textarea" placeholder="Address *" rows={3} />
       </Form.Group>
       <Form.Group>
-        <Form.Control type="Text" placeholder="Phone" />
+        <Form.Control type="text" placeholder="Phone" />
       </Form.Group>
 
-      <Button variant="success" type="submit" block>
+      <Button variant="success" type="submit" >
         Add New Employee
       </Button>
     </Form>
