@@ -3,7 +3,7 @@ const Employee = ({employees}) => {
   return (
     <>
   {
-    employees.map((employee,)=>{
+    employees.map((employee)=>{
         return(
         <tr key={employee.id}>
         <td>{employee.name}</td>
