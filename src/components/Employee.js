@@ -1,15 +1,28 @@
-const Employee = ({ employees }) => {
+import { EmployeeContext } from "../contexts/EmployeeContext";
+import { useContext, useEffect, useState } from "react";
+import {Button, Modal} from "react-bootstrap"
+import EditForm from "./EditForm";
+
+const Employee = ({ employee }) => {
+  const {deleteEmployee}= useContext(EmployeeContext)
+  const [show, setShow] = useState(false)
+
+  const handleClose = ()=> setShow(false);
+  const handleShow = ()=> setShow(true);
+
+  useEffect(() => {
+    handleClose()
+  }, [employee])
+  
+
   return (
     <>
-      {employees.map((employee) => {
-        return (
-          <tr key={employee.id}>
             <td>{employee.name}</td>
             <td>{employee.email}</td>
             <td>{employee.address}</td>
             <td>{employee.phone}</td>
             <td>
-              <a href="#editEmployeeModal" className="edit" data-toggle="modal">
+              <button className="btn text-warning btn-act" data-toggle="modal" onClick={handleShow}>
                 <i
                   className="material-icons"
                   data-toggle="tooltip"
@@ -17,11 +30,11 @@ const Employee = ({ employees }) => {
                 >
                   &#xE254;
                 </i>
-              </a>
-              <a
-                href="#deleteEmployeeModal"
-                className="delete"
+              </button>
+              <button
+                className="btn text-danger btn-act"
                 data-toggle="modal"
+                onClick={()=>deleteEmployee(employee.id)}
               >
                 <i
                   className="material-icons"
@@ -30,11 +43,24 @@ const Employee = ({ employees }) => {
                 >
                   &#xE872;
                 </i>
-              </a>
+              </button>
             </td>
-          </tr>
-        );
-      })}
+
+            <Modal show={show} onHide ={handleClose}>
+        <Modal.Header className="modal-header" closeButton>
+          <Modal.Title>
+            Update Employee
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EditForm theEmployee ={employee}/>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close Modal
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
