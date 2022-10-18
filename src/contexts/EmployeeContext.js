@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid"; //bu paket sayesinde "unıque ıd" üretimi
 export const EmployeeContext = createContext();
 
 const EmployeeContextProvider = (props) => {
-  const [employees, setEmployees] = useState([
+  const [employees,setEmployess] = useState([
     {
       id: uuidv4(),
       name: "Ömer Faruk",
@@ -42,8 +42,12 @@ const EmployeeContextProvider = (props) => {
     },
   ]);
 
+  const addEmployee =(name,email,address,phone)=>{
+    setEmployess([...employees,{id:uuidv4(),name,email,address,phone}])
+  }
+
   return (
-    <EmployeeContext.Provider value={{ employees }}>
+    <EmployeeContext.Provider value={{ employees,addEmployee}}>
       {props.children}
     </EmployeeContext.Provider>
   );
