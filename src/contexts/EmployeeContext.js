@@ -42,6 +42,8 @@ const EmployeeContextProvider = (props) => {
     },
   ]);
 
+  const sortedEmployess = employees.sort((a,b)=>a.name<b.name ? -1 : 1)
+
   const addEmployee =(name,email,address,phone)=>{
     setEmployess([...employees,{id:uuidv4(),name,email,address,phone}])
   }
@@ -55,7 +57,7 @@ const EmployeeContextProvider = (props) => {
   }
 
   return (
-    <EmployeeContext.Provider value={{ employees,addEmployee,deleteEmployee, updateEmployee}}>
+    <EmployeeContext.Provider value={{ sortedEmployess,addEmployee,deleteEmployee, updateEmployee}}>
       {props.children}
     </EmployeeContext.Provider>
   );
