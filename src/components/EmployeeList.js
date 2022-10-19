@@ -1,18 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import Employee from "./Employee";
 import { EmployeeContext } from "../contexts/EmployeeContext";
-import {Button, Modal} from "react-bootstrap"
+import {Alert, Button, Modal} from "react-bootstrap"
 import AddForm from "./AddForm";
 
 const EmployeeList = () => {
   const { employees } = useContext(EmployeeContext);
   const [show, setShow] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
  const handleClose = ()=> setShow(false);
  const handleShow = ()=> setShow(true);
+ //*const handleShowAlert=()=>setShowAlert(true);
+
+ const handleShowAlert=()=>{
+  setShowAlert(true)
+  setTimeout(() => {
+    setShowAlert(false)
+  }, 2000);
+ };
 
  useEffect(() => { 
   handleClose();
+  return()=>{
+    handleShowAlert();
+  }
  }, [employees])
  
 
@@ -38,6 +50,10 @@ const EmployeeList = () => {
         </div>
       </div>
 
+      <Alert show={showAlert} variant="success">
+        Employee List successfully updated!.
+      </Alert>
+
       <table className="table table-striped table-hover">
         <thead>
           <tr>
@@ -50,7 +66,7 @@ const EmployeeList = () => {
         </thead>
         <tbody>
         {
-          employees.map((employee)=>{
+          employees.sort((a,b)=>a.name.localeCompare(b.name)).map((employee)=>{
             return(
               <tr key={employee.id}>
               <Employee employee={employee}/>
@@ -82,3 +98,8 @@ const EmployeeList = () => {
 };
 
 export default EmployeeList;
+
+
+//! .sort((a,b)=>a.name.localeCompare(b.name)) 53.satırda isimleri alfabetik sıraya göre sıraladık .(1.YOL)
+//! .sort((a,b)=>(a.name < b.name ? -1 : 1)); 53.satırda isimleri alfabetik sıraya göre sıraladık .(2.YOL)
+//! 3. yol olarakta işlemi burada değilde contexts dosyasında yapıp buraya sort edilmiş halini gönderebiliriz.
